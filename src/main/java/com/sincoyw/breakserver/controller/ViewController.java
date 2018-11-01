@@ -18,6 +18,11 @@ public class ViewController {
         return "index";
     }
 
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping(value = "/user/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         return userJpaRepository.findAll();
