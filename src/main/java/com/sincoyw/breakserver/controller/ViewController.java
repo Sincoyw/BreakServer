@@ -23,6 +23,11 @@ public class ViewController {
         return "login";
     }
 
+    @RequestMapping(value = "/sign_up")
+    public String signUp() {
+        return "sign_up";
+    }
+
     @GetMapping(value = "/user/all")
     public @ResponseBody Iterable<User> getAllUsers() {
         return userJpaRepository.findAll();

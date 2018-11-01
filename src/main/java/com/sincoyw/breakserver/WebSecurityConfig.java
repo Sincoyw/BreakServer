@@ -18,6 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/",
                         "/home",
                         "/index",
+                        "/sign_up",
                         "/style.css",
                         "/css/**",
                         "/fonts/**",
