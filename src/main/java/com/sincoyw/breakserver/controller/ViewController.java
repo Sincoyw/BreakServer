@@ -1,17 +1,15 @@
 package com.sincoyw.breakserver.controller;
 
-import com.sincoyw.breakserver.dao.User;
-import com.sincoyw.breakserver.dao.UserJpaRepository;
+import com.sincoyw.breakserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ViewController {
     @Autowired
-    private UserJpaRepository userJpaRepository;
+    UserService userService;
 
     @RequestMapping(value = {"/", "/index", "/home"})
     public String index() {
@@ -23,13 +21,15 @@ public class ViewController {
         return "login";
     }
 
-    @RequestMapping(value = "/sign_up")
-    public String signUp() {
+    @RequestMapping(value = "/sign_up", method = RequestMethod.GET)
+    public String signUp(Model model) {
+        model.addAttribute("user", new com.sincoyw.breakserver.model.User());
         return "sign_up";
     }
 
-    @GetMapping(value = "/user/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        return userJpaRepository.findAll();
+    @RequestMapping(value = "/sign_up", method = RequestMethod.POST)
+    public String signUpSubmit(@ModelAttribute com.sincoyw.breakserver.model.User user) {
+        userService.save(user);
+        return "index";
     }
 }

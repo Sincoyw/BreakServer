@@ -1,39 +1,16 @@
-package com.sincoyw.breakserver.dao;
+package com.sincoyw.breakserver.model;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
-@Entity
-@Table(name = "tbl_user")
 public class User {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private String userID;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "country_code")
     private String countryCode;
-
-    @Column(name = "phone")
     private String phone;
-
-    @Column(name = "first_name")
     private String firstName;
-
-    @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "birthday")
     private Date birthday;
-
-    @Column(name = "gender")
     private Integer gender;
 
     public String getUserID() {
