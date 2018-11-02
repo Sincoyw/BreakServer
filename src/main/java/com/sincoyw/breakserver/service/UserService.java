@@ -4,4 +4,5 @@ import com.sincoyw.breakserver.model.User;
 
 public interface UserService {
     public abstract User save(User user);
+    public abstract User findUserByEmail(String email);
 }
