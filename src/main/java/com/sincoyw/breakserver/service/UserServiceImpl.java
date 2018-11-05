@@ -6,19 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Repository
 public class UserServiceImpl implements UserService {
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Autowired
     private UserJpaRepository userJpaRepository;
@@ -32,6 +26,7 @@ public class UserServiceImpl implements UserService {
         tempUser.setUserID(user.getUserID());
         tempUser.setEmail(user.getEmail());
         tempUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        tempUser.setUserName(user.getUsername());
         tempUser.setCountryCode(user.getCountryCode());
         tempUser.setPhone(user.getPhone());
         tempUser.setFirstName(user.getFirstName());
@@ -50,13 +45,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String email) {
-        List<com.sincoyw.breakserver.dao.User> userList = userJpaRepository.findByEmail(email);
-        if (userList.size() > 0) {
-            com.sincoyw.breakserver.dao.User user = userList.get(0);
+        com.sincoyw.breakserver.dao.User user = userJpaRepository.findByEmail(email);
+        return convertFromDaoToModelUser(user);
+    }
+
+
+    public User convertFromDaoToModelUser(com.sincoyw.breakserver.dao.User user) {
+        if (null != user) {
             User tempUser = new User();
             tempUser.setUserID(user.getUserID());
             tempUser.setEmail(user.getEmail());
             tempUser.setPassword(user.getPassword());
+            tempUser.setUsername(user.getUserName());
             tempUser.setCountryCode(user.getCountryCode());
             tempUser.setPhone(user.getPhone());
             tempUser.setFirstName(user.getFirstName());
@@ -67,8 +67,7 @@ public class UserServiceImpl implements UserService {
             tempUser.setBirthday(java.util.Date.from(instant));
             tempUser.setGender(user.getGender());
             return tempUser;
-        } else {
-            return null;
         }
+        return null;
     }
 }

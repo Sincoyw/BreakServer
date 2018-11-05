@@ -6,12 +6,21 @@ public class User {
     private String userID;
     private String email;
     private String password;
+    private String username;
     private String countryCode;
     private String phone;
     private String firstName;
     private String lastName;
     private Date birthday;
     private Integer gender;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getUserID() {
         return userID;

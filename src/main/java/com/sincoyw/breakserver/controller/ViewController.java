@@ -27,7 +27,8 @@ public class ViewController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginSubmit(@ModelAttribute com.sincoyw.breakserver.model.User user, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "";
+        redirectAttributes.addFlashAttribute("user", user);
+        return "redirect:/index";
     }
 
     @RequestMapping(value = "/sign_up", method = RequestMethod.GET)

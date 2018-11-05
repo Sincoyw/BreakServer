@@ -74,13 +74,21 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email" th:field="*{email}">
+                                    <input class="input--style-4" type="email" maxlength="320" name="email" th:field="*{email}">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Password</label>
-                                    <input class="input--style-4" type="password" name="password" th:field="*{password}">
+                                    <input class="input--style-4" type="password" maxlength="64" name="password" th:field="*{password}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">User Name</label>
+                                    <input class="input--style-4" type="text" maxlength="50" name="username" th:field="*{username}" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');">
                                 </div>
                             </div>
                         </div>
@@ -103,8 +111,9 @@
                                     <input class="input--style-4" type="text" name="phone" th:field="*{phone}">
                                 </div>
                             </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                            <div class="p-t-15">
+                                <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>

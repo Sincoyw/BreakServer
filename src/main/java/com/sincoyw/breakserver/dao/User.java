@@ -18,6 +18,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "user_name")
+    private String userName;
+
     @Column(name = "country_code")
     private String countryCode;
 
@@ -58,6 +61,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getCountryCode() {
