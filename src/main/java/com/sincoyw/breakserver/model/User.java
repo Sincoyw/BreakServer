@@ -3,7 +3,7 @@ package com.sincoyw.breakserver.model;
 import java.util.Date;
 
 public class User {
-    private String userID;
+    private long userID;
     private String email;
     private String password;
     private String username;
@@ -22,11 +22,11 @@ public class User {
         this.username = username;
     }
 
-    public String getUserID() {
+    public long getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 

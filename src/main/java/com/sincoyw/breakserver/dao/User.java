@@ -2,6 +2,7 @@ package com.sincoyw.breakserver.dao;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tbl_user")
@@ -10,15 +11,15 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String userID;
+    private Long userID;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String userName;
 
     @Column(name = "country_code")
@@ -39,11 +40,19 @@ public class User {
     @Column(name = "gender")
     private Integer gender;
 
-    public String getUserID() {
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    )
+    private Collection<Role> roles;
+
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
@@ -117,5 +126,13 @@ public class User {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

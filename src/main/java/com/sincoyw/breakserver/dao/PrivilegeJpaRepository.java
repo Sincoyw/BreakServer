@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.validation.constraints.NotNull;
 
-public interface UserJpaRepository extends JpaRepository<User, Long> {
-    User findByEmail(@NotNull String email);
+public interface PrivilegeJpaRepository extends JpaRepository<Privilege, Long> {
+    Privilege findByName(@NotNull String name);
 }
