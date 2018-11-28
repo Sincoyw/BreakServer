@@ -1,6 +1,8 @@
 package com.sincoyw.breakserver;
 
 import com.sincoyw.breakserver.dao.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -12,9 +14,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * 在ContextRefreshedEvent时初始化一些系统环境，如果没有进行权限和初始用户初始化则进行初始化
+ */
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    boolean alreadySetup = false;
+    private boolean alreadySetup = false;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserJpaRepository userJpaRepository;
@@ -29,7 +36,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PasswordEncoder passwordEncoder;
 
     @Override
-    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup)
             return;
@@ -41,18 +47,22 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
 
-        Role adminRole = roleJpaRepository.findByName("ROLE_ADMIN");
-        User user = new User();
-        user.setFirstName("Test");
-        user.setLastName("Test");
-        user.setPassword(passwordEncoder.encode("test"));
-        user.setEmail("test@test.com");
-        user.setUserName("Test");
-        user.setCountryCode("86");
-        user.setPhone("1111111");
-        user.setGender(1);
-        user.setRoles(Arrays.asList(adminRole));
-        userJpaRepository.save(user);
+        if (null == userJpaRepository.findByEmail("test@test.com")) {
+            Role adminRole = roleJpaRepository.findByName("ROLE_ADMIN");
+            User user = new User();
+            user.setFirstName("Test");
+            user.setLastName("Test");
+            user.setPassword(passwordEncoder.encode("test"));
+            user.setEmail("test@test.com");
+            user.setUserName("Test");
+            user.setCountryCode("86");
+            user.setPhone("1111111");
+            user.setGender(1);
+            user.setRoles(Arrays.asList(adminRole));
+            userJpaRepository.save(user);
+        } else {
+            logger.info("User exist with email test@test.com.");
+        }
 
         alreadySetup = true;
     }

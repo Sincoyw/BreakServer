@@ -7,6 +7,8 @@ import java.util.Collection;
 @Table(name = "tbl_role")
 public class Role {
 
+    public Role() {}
+
     public Role(String name) {
         this.name = name;
     }
